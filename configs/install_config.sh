@@ -8,7 +8,7 @@ EFI_PARTITION="/dev/sda1"
 # Localization
 LOCALE="en_US.UTF-8"
 KEYMAP="us"
-TIMEZONE="Europe/Moscow"
+TIMEZONE="Region/City"
 
 # Network
 HOSTNAME="archlinux"
