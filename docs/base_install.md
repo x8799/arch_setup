@@ -33,13 +33,13 @@ ping archlinux.org
 #### For Wi-Fi:
 
 1. List network interfaces:
-   
+
    ```bash
    ip link
    ```
 
 2. Connect to Wi-Fi:
-   
+
    ```bash
    iwctl
    device list
@@ -48,13 +48,41 @@ ping archlinux.org
    station DEVICE connect SSID
    exit
    ```
-   
+
    Replace DEVICE with your wireless interface (e.g., wlan0) and SSID with your network name.
 
 3. Verify connection:
-   
+
    ```bash
    ping archlinux.org
+   ```
+
+### Update the mirrorlist
+
+1. Install reflector:
+
+   ```bash
+   pacman -Sy reflector
+   ```
+
+2. Backup the current mirrorlist:
+
+   ```bash
+   cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+   ```
+
+3. Update and sort the mirrorlist:
+
+   ```bash
+   reflector --country "Your country" --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+   ```
+
+   For example: `Your country` replaces `"United States" Germany Japan`
+
+4. Sync the package databases:
+
+   ```bash
+   pacman -Syy
    ```
 
 ### Update the system clock
@@ -169,14 +197,34 @@ hwclock --systohc
 
 ### Localize the system
 
-Uncomment `en_US.UTF-8 UTF-8` and `ru_RU.UTF-8 UTF-8` in `/etc/locale.gen`:
+1. Edit the locale configuration file:
 
-```bash
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-echo LANG=en_US.UTF-8 > /etc/locale.conf
-```
+   ```bash
+   vim /etc/locale.gen
+   ```
+
+2. Uncomment your desired locale(s) in the file. For example:
+
+   - For English (US): Uncomment `en_US.UTF-8 UTF-8`
+   - For Russian: Uncomment `ru_RU.UTF-8 UTF-8`
+
+   Tip: In vim, use `/` to search for your locale, then use `x` to remove the `#` at the start of the line.
+
+3. Save and exit vim (press `Esc`, then type `:wq` and press Enter).
+
+4. Generate the locales:
+
+   ```bash
+   locale-gen
+   ```
+
+5. Set the system language:
+
+   ```bash
+   echo LANG=en_US.UTF-8 > /etc/locale.conf
+   ```
+
+   Note: Replace `en_US.UTF-8` with your preferred locale if different.
 
 ### Set the hostname and update hosts file
 

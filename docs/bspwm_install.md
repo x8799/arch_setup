@@ -44,3 +44,4 @@ To automatically update wallpapers when connecting or disconnecting monitors, cr
    ```bash
    sudo udevadm control --reload-rules
    ```
+

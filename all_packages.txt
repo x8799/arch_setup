@@ -8,6 +8,7 @@ bspwm
 efibootmgr
 feh
 fprintd
+git
 htop
 intel-media-driver
 intel-ucode
